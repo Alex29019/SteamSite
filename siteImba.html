@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Account | Space Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050510;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Анимированный космический фон */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+        }
+
+        .stars {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF, 1688px 864px #FFF, 500px 300px #FFF, 800px 100px #FFF, 1200px 600px #FFF, 300px 900px #FFF, 1500px 400px #FFF, 100px 500px #FFF, 600px 700px #FFF, 1100px 200px #FFF, 400px 1100px #FFF, 900px 1300px #FFF, 1400px 900px #FFF, 200px 1400px #FFF, 700px 500px #FFF, 1600px 1100px #FFF, 1000px 800px #FFF, 1300px 1400px #FFF;
+            animation: animStar 50s linear infinite;
+        }
+
+        .stars::after {
+            content: " ";
+            position: absolute;
+            top: 2000px;
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF, 1688px 864px #FFF, 500px 300px #FFF, 800px 100px #FFF, 1200px 600px #FFF, 300px 900px #FFF, 1500px 400px #FFF, 100px 500px #FFF, 600px 700px #FFF, 1100px 200px #FFF, 400px 1100px #FFF, 900px 1300px #FFF, 1400px 900px #FFF, 200px 1400px #FFF, 700px 500px #FFF, 1600px 1100px #FFF, 1000px 800px #FFF, 1300px 1400px #FFF;
+        }
+
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+
+        /* Основной контейнер (Glassmorphism) */
+        .container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Заголовок */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.8), 0 0 20px rgba(0, 243, 255, 0.4);
+        }
+
+        h1 span {
+            color: #00f3ff;
+        }
+
+        /* Карточки данных */
+        .data-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .data-card:hover::before {
+            left: 100%;
+        }
+
+        .data-card:hover {
+            border-color: #00f3ff;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .data-card.copied {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8892b0;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            word-break: break-all;
+        }
+
+        .copy-hint {
+            font-size: 11px;
+            color: #00f3ff;
+            margin-top: 8px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .data-card:hover .copy-hint {
+            opacity: 1;
+            text-shadow: 0 0 5px #00f3ff;
+        }
+
+        /* Блок Telegram */
+        .tg-section {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tg-text {
+            font-size: 14px;
+            color: #ccd6f6;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .tg-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #0088cc 0%, #00f3ff 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 136, 204, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tg-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.6), 0 0 60px rgba(0, 136, 204, 0.3);
+        }
+
+        .tg-button svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Уведомление (Toast) */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 255, 136, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .value {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Космический фон -->
+    <div class="space-bg">
+        <div class="stars"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <h1>Steam <span>Account</span></h1>
+
+        <!-- Логин -->
+        <div class="data-card" onclick="copyToClipboard('cahces11', this)">
+            <div class="label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Логин
+            </div>
+            <div class="value">cahces11</div>
+            <div class="copy-hint">Нажмите, чтобы скопировать</div>
+        </div>
+
+        <!-- Пароль -->
+        <div class="data-card" onclick="copyToClipboard('F92JLBQ4CLL8', this)">
+            <div class="label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Пароль
+            </div>
+            <div class="value">F92JLBQ4CLL8</div>
+            <div class="copy-hint">Нажмите, чтобы скопировать</div>
+        </div>
+
+        <!-- Telegram секция -->
+        <div class="tg-section">
+            <p class="tg-text">💫 Подпишитесь на наш Telegram канал,<br>чтобы не пропустить новые аккаунты и раздачи!</p>
+            <a href="https://t.me/MirArenDaff" target="_blank" class="tg-button">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.623 4.823-4.351c.192-.192-.054-.3-.297-.108l-5.965 3.759-2.568-.802c-.56-.176-.572-.56.117-.828l10.037-3.869c.466-.174.875.108.713.827z"/></svg>
+                Подписаться
+            </a>
+        </div>
+    </div>
+
+    <!-- Всплывающее уведомление -->
+    <div class="toast" id="toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toast-message">Скопировано!</span>
+    </div>
+
+    <script>
+        function copyToClipboard(text, element) {
+            // Копирование в буфер обмена
+            navigator.clipboard.writeText(text).then(() => {
+                // Визуальный эффект на карточке
+                const originalValue = element.querySelector('.value').innerText;
+                const originalHint = element.querySelector('.copy-hint').innerText;
+                
+                element.classList.add('copied');
+                element.querySelector('.value').innerText = 'Скопировано!';
+                element.querySelector('.value').style.color = '#00ff88';
+                element.querySelector('.value').style.textShadow = '0 0 10px rgba(0, 255, 136, 0.8)';
+                element.querySelector('.copy-hint').innerText = '✓ Успешно';
+
+                // Показ уведомления
+                showToast(`Скопировано: ${text}`);
+
+                // Возврат к исходному состоянию через 1.5 секунды
+                setTimeout(() => {
+                    element.classList.remove('copied');
+                    element.querySelector('.value').innerText = originalValue;
+                    element.querySelector('.value').style.color = '#ffffff';
+                    element.querySelector('.value').style.textShadow = '0 0 8px rgba(255, 255, 255, 0.5)';
+                    element.querySelector('.copy-hint').innerText = originalHint;
+                }, 1500);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                showToast('Ошибка копирования');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.innerText = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
